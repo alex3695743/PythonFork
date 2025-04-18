@@ -24,9 +24,9 @@ resource "docker_image" "dind" {
 # Contenedor Docker-in-Docker
 resource "docker_container" "dind" {
   image = docker_image.dind.image_id
-  name = "dind"
-  privileged   = true
-  restart      = "always"
+  name  = "dind"
+  privileged = true
+  restart    = "always"
 
   env = [
     "DOCKER_TLS_CERTDIR="
@@ -42,15 +42,10 @@ resource "docker_container" "dind" {
   }
 }
 
-# Imagen Jenkins
-resource "docker_image" "jenkins" {
-  name = "jenkins/jenkins:latest"
-}
-
-# Contenedor Jenkins
+# Contenedor Jenkins usando la imagen personalizada creada previamente
 resource "docker_container" "jenkins" {
-  image = docker_image.jenkins.image_id
-  name = "jenkins"
+  image   = "my-jenkins-image"  # Usamos la imagen creada manualmente
+  name    = "jenkins"
   restart = "always"
 
   ports {
